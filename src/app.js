@@ -30,6 +30,8 @@ app.get('/weather', (req, res) => {
 
     forecast(req.query.address, (error, {location, temp, description} = {}) => {
         if (error) {
+            console.log("hey")
+
             res.send({ forecast: error })
         } else {
             const forecastDescrip = "It is " + temp  + "C in " + location + ". " + description + ".";
