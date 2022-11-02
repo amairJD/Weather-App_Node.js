@@ -8,11 +8,13 @@ const forecast = (address, callback) => {
     request({url:geoUrl, json: true}, (error, response) => {
         if (error){
             callback(error, undefined);
-        } else if (response.body.error.code == 104) {
-            callback("Monthly request's of 250 reached, please try again next month.", undefined);
-        } else if (response.body.error){
-            // TODO Enhance error response based on API error codes
-            callback("Address does not exist.", undefined);
+        } else if (response.body.error) {
+            if (response.body.error.code == 104) {
+                callback("Monthly request's of 250 reached, please try again next month.", undefined);
+            } else {
+                // TODO Enhance error response based on API error codes
+                callback("Address does not exist.", undefined);
+            }
         } else {
             callback(undefined, {
                 location : response.body.request.query,
